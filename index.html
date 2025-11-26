@@ -2199,6 +2199,14 @@
         localStorage.setItem(IDEA_KEY, JSON.stringify(Array.from(completedIdeas)));
     }
 
+    function saveLearned() {
+        localStorage.setItem(LEARNED_KEY, JSON.stringify(Array.from(learnedSet)));
+    }
+
+    function saveCertificates() {
+        localStorage.setItem(CERT_KEY, JSON.stringify(certificates));
+    }
+
     function calculateXP() {
         // XP بسيط: كل كلمة متعلمَة = 10 نقاط
         const xp = learnedSet.size * 10;
@@ -2215,6 +2223,13 @@
 
         // تأكد من أن زر التحدي اليومي يعكس حالة التعلّم الحالية
         updateDailyLearnButton(getDailyFruit());
+    }
+    function updateProgressUI() {
+        const learnedCount = learnedSet.size;
+        progressText.textContent = `${learnedCount} / ${totalFruits}`;
+        const ratio = totalFruits > 0 ? (learnedCount / totalFruits) * 100 : 0;
+        progressBar.style.width = `${ratio}%`;
+        calculateXP();
     }
 
     function updateQuizInfo() {
@@ -2538,6 +2553,11 @@
     // Schnell-Quiz (A1) – Flashcards
     // ==============================
     function shuffleArray(arr) {
+
+    // ==============================
+    // Schnell-Quiz (A1) – Flashcards
+    // ==============================
+    function shuffleArray(arr) {
         const a = arr.slice();
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -2778,6 +2798,10 @@
     renderDailyChallenge();
     renderCertificates();
     renderIdeaBoard();
+    renderCertIcons();
+</script>
+</body>
+</html>
     renderCertIcons();
 </script>
 </body>
