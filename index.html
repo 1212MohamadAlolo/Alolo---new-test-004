@@ -850,6 +850,120 @@
             gap: 0.9rem;
         }
 
+        .idea-board {
+            margin: 1.5rem 0 0;
+            padding: 1rem;
+            border-radius: var(--radius-card);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+
+        .idea-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .idea-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .idea-counter {
+            font-size: 0.9rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+        }
+
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .idea-card {
+            border-radius: var(--radius-card);
+            padding: 0.85rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            gap: 0.35rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-card h4 {
+            font-size: 1rem;
+        }
+
+        .idea-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .idea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .idea-tag {
+            font-size: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .idea-meta {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .idea-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .idea-toggle {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .idea-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .idea-card-done {
+            border-color: rgba(54, 211, 153, 0.6);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(255, 255, 255, 0.05));
+        }
+
+        .idea-card-done .idea-toggle {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.7);
+        }
+
         .cert-card {
             position: relative;
             border-radius: 18px;
@@ -1028,6 +1142,21 @@
 
         body[data-theme="light"] .cert-text-ar {
             color: #b7791f;
+        }
+
+        body[data-theme="light"] .idea-board {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-toggle {
+            border-color: rgba(11, 35, 64, 0.35);
+            background: rgba(11, 35, 64, 0.05);
         }
 
         /* ===============================
@@ -1459,6 +1588,18 @@
                 Tipp: Je mehr Karten du als „Gelernt“ markierst, desto aussagekräftiger wird dein Zertifikat.
             </div>
         </div>
+        <div class="idea-board" aria-label="Roadmap und Entwicklungs-Ideen">
+            <div class="idea-header">
+                <div>
+                    <div class="idea-title">Ideen für die Weiterentwicklung</div>
+                    <p class="idea-subtitle">
+                        Mini-Roadmap mit Verbesserungen zu Motivation, Lernen und Barrierefreiheit. Markiere, was du schon getestet hast.
+                    </p>
+                </div>
+                <div class="idea-counter" id="ideaCounter" aria-live="polite">0 / 0</div>
+            </div>
+            <div class="idea-grid" id="ideaList"></div>
+        </div>
         <div id="certList" class="cert-list">
             <!-- الشهادات تولَّد هنا -->
         </div>
@@ -1492,6 +1633,7 @@
     const THEME_KEY = 'alolo-fruits-theme';
     const LEARNED_KEY = 'alolo-fruits-learned';
     const CERT_KEY = 'alolo-fruits-certificates';
+    const IDEA_KEY = 'alolo-fruits-ideas';
 
     // عناصر التبديل بين الوضعين
     const themeToggleBtn = document.querySelector('.theme-toggle');
@@ -1905,6 +2047,57 @@
 
     const totalFruits = fruits.length;
 
+    const roadmapIdeas = [
+        {
+            id: 'streaks',
+            title: 'Streak & Wochenziel',
+            desc: 'Ein Wochenziel (z. B. 70 XP) mit Streak-Anzeige motiviert zum täglichen Lernen und könnte an den XP-Pillen andocken.',
+            tags: ['Motivation', 'XP'],
+            impact: 'hoch',
+            effort: 'mittel'
+        },
+        {
+            id: 'flashcards',
+            title: 'Spaced Repetition Karten',
+            desc: 'Kleine Wiederholungs-Decks, die automatisch ungelernte Früchte häufiger zeigen. Ideal als zweiter Modus neben dem Schnell-Quiz.',
+            tags: ['Lernlogik', 'Quiz'],
+            impact: 'hoch',
+            effort: 'hoch'
+        },
+        {
+            id: 'audio-clips',
+            title: 'Offline Audio-Clips',
+            desc: 'Kurze, lokal zwischengespeicherte Audio-Snippets pro Frucht, damit die Aussprache auch ohne Netz abrufbar bleibt.',
+            tags: ['PWA', 'Barrierefreiheit'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'achievements',
+            title: 'Mini-Erfolge & Abzeichen',
+            desc: 'Badges für „erste 5 Karten“, „alle Zitrusfrüchte“ oder „3 Tage am Stück gelernt“ verknüpfen XP mit klaren Etappen.',
+            tags: ['Gamification'],
+            impact: 'mittel',
+            effort: 'niedrig'
+        },
+        {
+            id: 'print-pack',
+            title: 'Druckbares Kärtchen-Paket',
+            desc: 'Export als druckfreundliche Lernkarten mit Vorder-/Rückseite (DE/AR + Beispielsatz) für Offline-Übung.',
+            tags: ['Druck', 'Offline'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'accessibility',
+            title: 'Barrierefreiheit & Tastatursteuerung',
+            desc: 'Fokus-Ring, ARIA-Rollen und Tastaturkürzel (Nächste Karte, Flip, Markieren) verbessern die Nutzung auf Desktop.',
+            tags: ['A11y'],
+            impact: 'hoch',
+            effort: 'niedrig'
+        }
+    ];
+
     // ==============================
     // عناصر عامة و state
     // ==============================
@@ -1917,6 +2110,8 @@
     const quizInfo = document.getElementById('quizInfo');
     const xpValueEl = document.getElementById('xpValue');
     const certIconsEl = document.getElementById('certIcons');
+    const ideaListEl = document.getElementById('ideaList');
+    const ideaCounterEl = document.getElementById('ideaCounter');
     const navTabs = document.querySelectorAll('.nav-tab');
     const pages = document.querySelectorAll('.page');
 
@@ -1978,6 +2173,31 @@
     };
 
     let dailyOffset = 0;
+    let completedIdeas = new Set();
+
+    const storedIdeas = localStorage.getItem(IDEA_KEY);
+    if (storedIdeas) {
+        try {
+            const parsedIdeas = JSON.parse(storedIdeas);
+            if (Array.isArray(parsedIdeas)) {
+                completedIdeas = new Set(parsedIdeas);
+            }
+        } catch (e) {
+            completedIdeas = new Set();
+        }
+    }
+
+    function saveLearned() {
+        localStorage.setItem(LEARNED_KEY, JSON.stringify(Array.from(learnedSet)));
+    }
+
+    function saveCertificates() {
+        localStorage.setItem(CERT_KEY, JSON.stringify(certificates));
+    }
+
+    function saveIdeas() {
+        localStorage.setItem(IDEA_KEY, JSON.stringify(Array.from(completedIdeas)));
+    }
 
     function saveLearned() {
         localStorage.setItem(LEARNED_KEY, JSON.stringify(Array.from(learnedSet)));
@@ -1994,6 +2214,16 @@
         return xp;
     }
 
+    function updateProgressUI() {
+        const learnedCount = learnedSet.size;
+        progressText.textContent = `${learnedCount} / ${totalFruits}`;
+        const ratio = totalFruits > 0 ? (learnedCount / totalFruits) * 100 : 0;
+        progressBar.style.width = `${ratio}%`;
+        calculateXP();
+
+        // تأكد من أن زر التحدي اليومي يعكس حالة التعلّم الحالية
+        updateDailyLearnButton(getDailyFruit());
+    }
     function updateProgressUI() {
         const learnedCount = learnedSet.size;
         progressText.textContent = `${learnedCount} / ${totalFruits}`;
@@ -2271,6 +2501,60 @@
     });
 
     // ==============================
+    // Roadmap / Ideenboard
+    // ==============================
+    function renderIdeaBoard() {
+        if (!ideaListEl || !ideaCounterEl) return;
+
+        ideaListEl.innerHTML = '';
+
+        const doneCount = completedIdeas.size;
+        const completionPercent = roadmapIdeas.length
+            ? Math.round((doneCount / roadmapIdeas.length) * 100)
+            : 0;
+        ideaCounterEl.textContent = `${doneCount} / ${roadmapIdeas.length} Ideen umgesetzt (${completionPercent}%)`;
+
+        roadmapIdeas.forEach(idea => {
+            const done = completedIdeas.has(idea.id);
+            const card = document.createElement('article');
+            card.className = 'idea-card' + (done ? ' idea-card-done' : '');
+
+            card.innerHTML = `
+                <h4>${idea.title}</h4>
+                <p class="idea-desc">${idea.desc}</p>
+                <div class="idea-tags">${idea.tags.map(tag => `<span class="idea-tag">${tag}</span>`).join('')}</div>
+                <div class="idea-actions">
+                    <div class="idea-meta">Impact: ${idea.impact} · Aufwand: ${idea.effort}</div>
+                    <button class="idea-toggle" type="button">${done ? '✓ Getestet' : 'Zu testen'}</button>
+                </div>
+            `;
+
+            const toggleBtn = card.querySelector('.idea-toggle');
+            toggleBtn.setAttribute('aria-pressed', done ? 'true' : 'false');
+            toggleBtn.setAttribute(
+                'aria-label',
+                `${done ? 'Als getestet markiert' : 'Zum Testen markieren'}: ${idea.title}`
+            );
+            toggleBtn.addEventListener('click', () => {
+                if (completedIdeas.has(idea.id)) {
+                    completedIdeas.delete(idea.id);
+                } else {
+                    completedIdeas.add(idea.id);
+                }
+                saveIdeas();
+                renderIdeaBoard();
+            });
+
+            ideaListEl.appendChild(card);
+        });
+    }
+
+    // ==============================
+    // Schnell-Quiz (A1) – Flashcards
+    // ==============================
+    function shuffleArray(arr) {
+
+    // ==============================
     // Schnell-Quiz (A1) – Flashcards
     // ==============================
     function shuffleArray(arr) {
@@ -2513,6 +2797,11 @@
     renderFruits();
     renderDailyChallenge();
     renderCertificates();
+    renderIdeaBoard();
+    renderCertIcons();
+</script>
+</body>
+</html>
     renderCertIcons();
 </script>
 </body>
