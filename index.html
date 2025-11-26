@@ -321,6 +321,106 @@
             font-size: 0.8rem;
         }
 
+        .daily-challenge {
+            margin-top: 0.6rem;
+            padding: 0.85rem 0.9rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(7, 17, 32, 0.95);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .daily-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .daily-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .daily-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .daily-body {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .daily-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .daily-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .daily-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .daily-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-items: baseline;
+            font-size: 0.95rem;
+        }
+
+        .daily-de {
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.18rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .daily-ar {
+            color: var(--yellow-soft);
+            font-weight: 600;
+        }
+
+        .daily-example {
+            font-size: 0.82rem;
+            opacity: 0.95;
+        }
+
+        .daily-hint {
+            font-size: 0.78rem;
+            opacity: 0.85;
+        }
+
+        .daily-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
         .progress-track {
             flex: 1 1 180px;
             height: 0.55rem;
@@ -750,6 +850,158 @@
             gap: 0.9rem;
         }
 
+        .idea-board {
+            margin: 1.5rem 0 0;
+            padding: 1rem;
+            border-radius: var(--radius-card);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+
+        .idea-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .idea-select,
+        .idea-toggle-btn {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: inherit;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+        }
+
+        .idea-select:focus,
+        .idea-toggle-btn:focus {
+            outline: 2px solid var(--yellow-soft);
+            outline-offset: 2px;
+            border-color: var(--yellow-soft);
+        }
+
+        .idea-toggle-btn[aria-pressed="true"] {
+            background: rgba(34, 197, 94, 0.18);
+            border-color: rgba(34, 197, 94, 0.7);
+        }
+
+        .idea-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .idea-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .idea-counter {
+            font-size: 0.9rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+        }
+
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .idea-card {
+            border-radius: var(--radius-card);
+            padding: 0.85rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            gap: 0.35rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-card h4 {
+            font-size: 1rem;
+        }
+
+        .idea-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .idea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .idea-tag {
+            font-size: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .idea-meta {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .idea-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .idea-toggle {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .idea-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .idea-card-done {
+            border-color: rgba(54, 211, 153, 0.6);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(255, 255, 255, 0.05));
+        }
+
+        .idea-empty {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .idea-card-done .idea-toggle {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.7);
+        }
+
         .cert-card {
             position: relative;
             border-radius: 18px;
@@ -867,6 +1119,17 @@
             border-color: #111827;
         }
 
+        body[data-theme="light"] .daily-challenge {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        body[data-theme="light"] .daily-de {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+
         body[data-theme="light"] .card-inner {
             background: rgba(255, 255, 255, 0.96);
             border-color: rgba(16, 42, 67, 0.16);
@@ -917,6 +1180,21 @@
 
         body[data-theme="light"] .cert-text-ar {
             color: #b7791f;
+        }
+
+        body[data-theme="light"] .idea-board {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-toggle {
+            border-color: rgba(11, 35, 64, 0.35);
+            background: rgba(11, 35, 64, 0.05);
         }
 
         /* ===============================
@@ -1269,6 +1547,39 @@
                 </div>
                 <div class="quiz-info" id="quizInfo"></div>
             </div>
+
+            <div class="daily-challenge" id="dailyChallenge" aria-live="polite">
+                <div class="daily-header">
+                    <div>
+                        <div class="daily-label">Tägliche Mini-Aufgabe</div>
+                        <div class="daily-title" id="dailyTitle"></div>
+                    </div>
+                    <button id="refreshDailyBtn" class="control-button small" type="button">
+                        🔄 Neu laden
+                    </button>
+                </div>
+                <div class="daily-body">
+                    <div class="daily-img">
+                        <img id="dailyImg" src="" alt="">
+                    </div>
+                    <div class="daily-info">
+                        <div class="daily-names">
+                            <div class="daily-de" id="dailyDe"></div>
+                            <div class="daily-ar" id="dailyAr" lang="ar" dir="rtl"></div>
+                        </div>
+                        <p class="daily-example" id="dailyExample"></p>
+                        <div class="daily-actions">
+                            <button id="dailySpeakBtn" class="control-button small" type="button">
+                                🔊 Aussprache
+                            </button>
+                            <button id="dailyLearnBtn" class="control-button small" type="button">
+                                ★ Als gelernt zählen
+                            </button>
+                        </div>
+                        <div class="daily-hint" id="dailyHint"></div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="gallery" aria-label="Galerie der Früchte">
@@ -1315,6 +1626,48 @@
                 Tipp: Je mehr Karten du als „Gelernt“ markierst, desto aussagekräftiger wird dein Zertifikat.
             </div>
         </div>
+        <div class="idea-board" aria-label="Roadmap und Entwicklungs-Ideen">
+            <div class="idea-header">
+                <div>
+                    <div class="idea-title">Ideen für die Weiterentwicklung</div>
+                    <p class="idea-subtitle">
+                        Mini-Roadmap mit Verbesserungen zu Motivation, Lernen und Barrierefreiheit. Markiere, was du schon getestet hast.
+                    </p>
+                </div>
+                <div
+                    class="idea-counter"
+                    id="ideaCounter"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    0 / 0
+                </div>
+            </div>
+            <div class="idea-controls" aria-label="Filter und Sortierung für die Roadmap">
+                <label class="sr-only" for="ideaTagFilter">Nach Kategorie filtern</label>
+                <select id="ideaTagFilter" class="idea-select">
+                    <option value="all">Alle Kategorien</option>
+                </select>
+                <label class="sr-only" for="ideaSortSelect">Sortierung wählen</label>
+                <select id="ideaSortSelect" class="idea-select">
+                    <option value="impact">Wirkung: hoch → niedrig</option>
+                    <option value="effort">Aufwand: niedrig → hoch</option>
+                    <option value="alpha">Alphabetisch</option>
+                    <option value="status">Status: getestet zuerst</option>
+                </select>
+                <button
+                    id="ideaDoneToggle"
+                    class="idea-toggle-btn"
+                    type="button"
+                    aria-pressed="false"
+                >
+                    Nur getestete anzeigen
+                </button>
+            </div>
+            <div id="ideaLiveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+            <div class="idea-grid" id="ideaList"></div>
+        </div>
         <div id="certList" class="cert-list">
             <!-- الشهادات تولَّد هنا -->
         </div>
@@ -1348,6 +1701,7 @@
     const THEME_KEY = 'alolo-fruits-theme';
     const LEARNED_KEY = 'alolo-fruits-learned';
     const CERT_KEY = 'alolo-fruits-certificates';
+    const IDEA_KEY = 'alolo-fruits-ideas';
 
     // عناصر التبديل بين الوضعين
     const themeToggleBtn = document.querySelector('.theme-toggle');
@@ -1761,6 +2115,57 @@
 
     const totalFruits = fruits.length;
 
+    const roadmapIdeas = [
+        {
+            id: 'streaks',
+            title: 'Streak & Wochenziel',
+            desc: 'Ein Wochenziel (z. B. 70 XP) mit Streak-Anzeige motiviert zum täglichen Lernen und könnte an den XP-Pillen andocken.',
+            tags: ['Motivation', 'XP'],
+            impact: 'hoch',
+            effort: 'mittel'
+        },
+        {
+            id: 'flashcards',
+            title: 'Spaced Repetition Karten',
+            desc: 'Kleine Wiederholungs-Decks, die automatisch ungelernte Früchte häufiger zeigen. Ideal als zweiter Modus neben dem Schnell-Quiz.',
+            tags: ['Lernlogik', 'Quiz'],
+            impact: 'hoch',
+            effort: 'hoch'
+        },
+        {
+            id: 'audio-clips',
+            title: 'Offline Audio-Clips',
+            desc: 'Kurze, lokal zwischengespeicherte Audio-Snippets pro Frucht, damit die Aussprache auch ohne Netz abrufbar bleibt.',
+            tags: ['PWA', 'Barrierefreiheit'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'achievements',
+            title: 'Mini-Erfolge & Abzeichen',
+            desc: 'Badges für „erste 5 Karten“, „alle Zitrusfrüchte“ oder „3 Tage am Stück gelernt“ verknüpfen XP mit klaren Etappen.',
+            tags: ['Gamification'],
+            impact: 'mittel',
+            effort: 'niedrig'
+        },
+        {
+            id: 'print-pack',
+            title: 'Druckbares Kärtchen-Paket',
+            desc: 'Export als druckfreundliche Lernkarten mit Vorder-/Rückseite (DE/AR + Beispielsatz) für Offline-Übung.',
+            tags: ['Druck', 'Offline'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'accessibility',
+            title: 'Barrierefreiheit & Tastatursteuerung',
+            desc: 'Fokus-Ring, ARIA-Rollen und Tastaturkürzel (Nächste Karte, Flip, Markieren) verbessern die Nutzung auf Desktop.',
+            tags: ['A11y'],
+            impact: 'hoch',
+            effort: 'niedrig'
+        }
+    ];
+
     // ==============================
     // عناصر عامة و state
     // ==============================
@@ -1773,6 +2178,12 @@
     const quizInfo = document.getElementById('quizInfo');
     const xpValueEl = document.getElementById('xpValue');
     const certIconsEl = document.getElementById('certIcons');
+    const ideaListEl = document.getElementById('ideaList');
+    const ideaCounterEl = document.getElementById('ideaCounter');
+    const ideaLiveRegion = document.getElementById('ideaLiveRegion');
+    const ideaTagFilter = document.getElementById('ideaTagFilter');
+    const ideaSortSelect = document.getElementById('ideaSortSelect');
+    const ideaDoneToggle = document.getElementById('ideaDoneToggle');
     const navTabs = document.querySelectorAll('.nav-tab');
     const pages = document.querySelectorAll('.page');
 
@@ -1785,6 +2196,16 @@
 
     const certListEl = document.getElementById('certList');
     const generateCertBtn = document.getElementById('generateCertBtn');
+
+    const dailyTitleEl = document.getElementById('dailyTitle');
+    const dailyImgEl = document.getElementById('dailyImg');
+    const dailyDeEl = document.getElementById('dailyDe');
+    const dailyArEl = document.getElementById('dailyAr');
+    const dailyExampleEl = document.getElementById('dailyExample');
+    const dailyHintEl = document.getElementById('dailyHint');
+    const refreshDailyBtn = document.getElementById('refreshDailyBtn');
+    const dailySpeakBtn = document.getElementById('dailySpeakBtn');
+    const dailyLearnBtn = document.getElementById('dailyLearnBtn');
 
     let searchQuery = '';
     let activeFilter = 'all';
@@ -1823,12 +2244,35 @@
         correct: 0
     };
 
+    let dailyOffset = 0;
+    let completedIdeas = new Set();
+    let lastIdeaFocusId = null;
+    let activeIdeaTag = 'all';
+    let ideaSortMode = 'impact';
+    let showOnlyDoneIdeas = false;
+
+    const storedIdeas = localStorage.getItem(IDEA_KEY);
+    if (storedIdeas) {
+        try {
+            const parsedIdeas = JSON.parse(storedIdeas);
+            if (Array.isArray(parsedIdeas)) {
+                completedIdeas = new Set(parsedIdeas);
+            }
+        } catch (e) {
+            completedIdeas = new Set();
+        }
+    }
+
     function saveLearned() {
         localStorage.setItem(LEARNED_KEY, JSON.stringify(Array.from(learnedSet)));
     }
 
     function saveCertificates() {
         localStorage.setItem(CERT_KEY, JSON.stringify(certificates));
+    }
+
+    function saveIdeas() {
+        localStorage.setItem(IDEA_KEY, JSON.stringify(Array.from(completedIdeas)));
     }
 
     function calculateXP() {
@@ -1844,6 +2288,9 @@
         const ratio = totalFruits > 0 ? (learnedCount / totalFruits) * 100 : 0;
         progressBar.style.width = `${ratio}%`;
         calculateXP();
+
+        // تأكد من أن زر التحدي اليومي يعكس حالة التعلّم الحالية
+        updateDailyLearnButton(getDailyFruit());
     }
 
     function updateQuizInfo() {
@@ -1853,6 +2300,44 @@
             return;
         }
         quizInfo.textContent = `Schnell-Quiz (A1): ${quizStats.correct} / ${quizStats.total} richtig`;
+    }
+
+    function getDayIndex(offset = 0) {
+        const today = new Date();
+        const startOfYear = new Date(today.getFullYear(), 0, 0);
+        const diff = today - startOfYear;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
+        const rawIndex = (dayOfYear + offset) % totalFruits;
+        return rawIndex < 0 ? rawIndex + totalFruits : rawIndex;
+    }
+
+    function getDailyFruit() {
+        if (!fruits.length) return null;
+        return fruits[getDayIndex(dailyOffset)];
+    }
+
+    function updateDailyLearnButton(fruit) {
+        if (!fruit) return;
+        const learned = learnedSet.has(fruit.id);
+        dailyLearnBtn.textContent = learned ? '✓ Schon gelernt' : '★ Als gelernt zählen';
+        dailyLearnBtn.classList.toggle('active', learned);
+    }
+
+    function renderDailyChallenge() {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+
+        dailyTitleEl.textContent = `Fokus des Tages · ${fruit.levelCode}`;
+        dailyImgEl.src = fruit.img;
+        dailyImgEl.alt = fruit.alt || '';
+        dailyDeEl.textContent = `${fruit.article} ${fruit.deName}`;
+        dailyArEl.textContent = fruit.arName;
+        dailyExampleEl.textContent = `${fruit.exampleDe} — ${fruit.exampleAr}`;
+        dailyHintEl.textContent = `${fruit.category} · ${fruit.genusHint}`;
+        dailySpeakBtn.disabled = !supportsSpeech;
+
+        updateDailyLearnButton(fruit);
     }
 
     function normalizeText(str) {
@@ -2047,6 +2532,193 @@
     printBtn.addEventListener('click', () => {
         window.print();
     });
+
+    refreshDailyBtn.addEventListener('click', () => {
+        if (!totalFruits) return;
+        dailyOffset = (dailyOffset + 1) % totalFruits;
+        renderDailyChallenge();
+    });
+
+    dailySpeakBtn.addEventListener('click', () => {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+        speakGerman(`${fruit.article} ${fruit.deName}`);
+    });
+
+    dailyLearnBtn.addEventListener('click', () => {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+
+        if (learnedSet.has(fruit.id)) {
+            learnedSet.delete(fruit.id);
+        } else {
+            learnedSet.add(fruit.id);
+        }
+
+        saveLearned();
+        updateProgressUI();
+        renderFruits();
+        renderDailyChallenge();
+    });
+
+    // ==============================
+    // Roadmap / Ideenboard
+    // ==============================
+    const impactOrder = { hoch: 0, mittel: 1, niedrig: 2 };
+    const effortOrder = { niedrig: 0, mittel: 1, hoch: 2 };
+    const ideaSortLabels = {
+        impact: 'Wirkung hoch → niedrig',
+        effort: 'Aufwand niedrig → hoch',
+        alpha: 'Alphabetisch',
+        status: 'Status getestet zuerst'
+    };
+
+    function renderIdeaBoard() {
+        if (!ideaListEl || !ideaCounterEl) return;
+
+        const focusTargetId = lastIdeaFocusId || document.activeElement?.dataset?.ideaId || null;
+        ideaListEl.innerHTML = '';
+
+        const doneCount = completedIdeas.size;
+        const completionPercent = roadmapIdeas.length
+            ? Math.round((doneCount / roadmapIdeas.length) * 100)
+            : 0;
+
+        const filtered = roadmapIdeas.filter(idea => {
+            const matchesTag = activeIdeaTag === 'all' || idea.tags.includes(activeIdeaTag);
+            const matchesDone = showOnlyDoneIdeas ? completedIdeas.has(idea.id) : true;
+            return matchesTag && matchesDone;
+        });
+
+        const sortedIdeas = filtered.slice().sort((a, b) => {
+            switch (ideaSortMode) {
+                case 'effort':
+                    return (effortOrder[a.effort] ?? 3) - (effortOrder[b.effort] ?? 3);
+                case 'alpha':
+                    return a.title.localeCompare(b.title, 'de');
+                case 'status': {
+                    const aDone = completedIdeas.has(a.id) ? 0 : 1;
+                    const bDone = completedIdeas.has(b.id) ? 0 : 1;
+                    if (aDone !== bDone) return aDone - bDone;
+                    return a.title.localeCompare(b.title, 'de');
+                }
+                case 'impact':
+                default:
+                    return (impactOrder[a.impact] ?? 3) - (impactOrder[b.impact] ?? 3);
+            }
+        });
+
+        ideaCounterEl.textContent = `${doneCount} / ${roadmapIdeas.length} Ideen umgesetzt (${completionPercent}%)`;
+        if (ideaLiveRegion) {
+            const filterText = activeIdeaTag === 'all' ? 'alle Kategorien' : `Kategorie ${activeIdeaTag}`;
+            const statusText = showOnlyDoneIdeas ? 'nur getestete' : 'alle Stati';
+            ideaLiveRegion.textContent = `Roadmap-Status aktualisiert: ${doneCount} von ${roadmapIdeas.length} Ideen getestet (${completionPercent}%). Filter: ${filterText}, ${statusText}. Sortierung: ${ideaSortLabels[ideaSortMode]}.`;
+        }
+
+        if (sortedIdeas.length === 0) {
+            const emptyState = document.createElement('div');
+            emptyState.className = 'idea-card idea-empty';
+            emptyState.textContent = 'Keine Einträge für diesen Filter. Wähle eine andere Kategorie oder zeige alle Ideen an.';
+            ideaListEl.appendChild(emptyState);
+        }
+
+        sortedIdeas.forEach(idea => {
+            const done = completedIdeas.has(idea.id);
+            const card = document.createElement('article');
+            card.className = 'idea-card' + (done ? ' idea-card-done' : '');
+
+            card.innerHTML = `
+                <h4>${idea.title}</h4>
+                <p class="idea-desc">${idea.desc}</p>
+                <div class="idea-tags">${idea.tags.map(tag => `<span class="idea-tag">${tag}</span>`).join('')}</div>
+                <div class="idea-actions">
+                    <div class="idea-meta">Impact: ${idea.impact} · Aufwand: ${idea.effort}</div>
+                    <button class="idea-toggle" type="button">${done ? '✓ Getestet' : 'Zu testen'}</button>
+                </div>
+            `;
+
+            const toggleBtn = card.querySelector('.idea-toggle');
+            toggleBtn.dataset.ideaId = idea.id;
+            toggleBtn.setAttribute('aria-pressed', done ? 'true' : 'false');
+            toggleBtn.setAttribute(
+                'aria-label',
+                `${done ? 'Als getestet markiert' : 'Zum Testen markieren'}: ${idea.title}`
+            );
+            toggleBtn.addEventListener('click', () => {
+                const wasDone = completedIdeas.has(idea.id);
+                lastIdeaFocusId = idea.id;
+
+                if (wasDone) {
+                    completedIdeas.delete(idea.id);
+                } else {
+                    completedIdeas.add(idea.id);
+                }
+
+                const updatedDoneCount = completedIdeas.size;
+                const updatedPercent = roadmapIdeas.length
+                    ? Math.round((updatedDoneCount / roadmapIdeas.length) * 100)
+                    : 0;
+
+                if (ideaLiveRegion) {
+                    ideaLiveRegion.textContent = `${idea.title}: ${wasDone ? 'auf To-Do zurückgesetzt' : 'als getestet markiert'}. Fortschritt ${updatedDoneCount} / ${roadmapIdeas.length} (${updatedPercent}%).`;
+                }
+
+                saveIdeas();
+                renderIdeaBoard();
+            });
+
+            ideaListEl.appendChild(card);
+        });
+
+        if (focusTargetId) {
+            const focusBtn = ideaListEl.querySelector(`[data-idea-id="${focusTargetId}"]`);
+            if (focusBtn) {
+                focusBtn.focus();
+            }
+        }
+        lastIdeaFocusId = null;
+    }
+
+    function populateIdeaFilters() {
+        if (!ideaTagFilter) return;
+        const tagSet = new Set();
+        roadmapIdeas.forEach(idea => {
+            idea.tags.forEach(tag => tagSet.add(tag));
+        });
+
+        const sortedTags = Array.from(tagSet).sort((a, b) => a.localeCompare(b, 'de'));
+        sortedTags.forEach(tag => {
+            const opt = document.createElement('option');
+            opt.value = tag;
+            opt.textContent = tag;
+            ideaTagFilter.appendChild(opt);
+        });
+    }
+
+    if (ideaTagFilter) {
+        ideaTagFilter.addEventListener('change', () => {
+            activeIdeaTag = ideaTagFilter.value;
+            renderIdeaBoard();
+        });
+    }
+
+    if (ideaSortSelect) {
+        ideaSortSelect.addEventListener('change', () => {
+            ideaSortMode = ideaSortSelect.value;
+            renderIdeaBoard();
+        });
+    }
+
+    if (ideaDoneToggle) {
+        ideaDoneToggle.addEventListener('click', () => {
+            showOnlyDoneIdeas = !showOnlyDoneIdeas;
+            ideaDoneToggle.setAttribute('aria-pressed', showOnlyDoneIdeas ? 'true' : 'false');
+            ideaDoneToggle.textContent = showOnlyDoneIdeas
+                ? 'Alle Ideen anzeigen'
+                : 'Nur getestete anzeigen';
+            renderIdeaBoard();
+        });
+    }
 
     // ==============================
     // Schnell-Quiz (A1) – Flashcards
@@ -2288,8 +2960,11 @@
     // ==============================
     // رسم أولي
     // ==============================
+    populateIdeaFilters();
     renderFruits();
+    renderDailyChallenge();
     renderCertificates();
+    renderIdeaBoard();
     renderCertIcons();
 </script>
 </body>
