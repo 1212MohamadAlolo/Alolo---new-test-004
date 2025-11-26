@@ -321,6 +321,106 @@
             font-size: 0.8rem;
         }
 
+        .daily-challenge {
+            margin-top: 0.6rem;
+            padding: 0.85rem 0.9rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(7, 17, 32, 0.95);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .daily-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .daily-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .daily-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .daily-body {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .daily-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .daily-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .daily-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .daily-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-items: baseline;
+            font-size: 0.95rem;
+        }
+
+        .daily-de {
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.18rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .daily-ar {
+            color: var(--yellow-soft);
+            font-weight: 600;
+        }
+
+        .daily-example {
+            font-size: 0.82rem;
+            opacity: 0.95;
+        }
+
+        .daily-hint {
+            font-size: 0.78rem;
+            opacity: 0.85;
+        }
+
+        .daily-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
         .progress-track {
             flex: 1 1 180px;
             height: 0.55rem;
@@ -867,6 +967,17 @@
             border-color: #111827;
         }
 
+        body[data-theme="light"] .daily-challenge {
+            background: rgba(255, 255, 255, 0.92);
+            border-color: rgba(15, 23, 42, 0.08);
+        }
+
+        body[data-theme="light"] .daily-de {
+            background: rgba(15, 23, 42, 0.05);
+            border-color: rgba(15, 23, 42, 0.12);
+            color: #0f172a;
+        }
+
         body[data-theme="light"] .card-inner {
             background: rgba(255, 255, 255, 0.96);
             border-color: rgba(16, 42, 67, 0.16);
@@ -1268,6 +1379,39 @@
                     <div class="progress-bar" id="progressBar"></div>
                 </div>
                 <div class="quiz-info" id="quizInfo"></div>
+            </div>
+
+            <div class="daily-challenge" id="dailyChallenge" aria-live="polite">
+                <div class="daily-header">
+                    <div>
+                        <div class="daily-label">Tägliche Mini-Aufgabe</div>
+                        <div class="daily-title" id="dailyTitle"></div>
+                    </div>
+                    <button id="refreshDailyBtn" class="control-button small" type="button">
+                        🔄 Neu laden
+                    </button>
+                </div>
+                <div class="daily-body">
+                    <div class="daily-img">
+                        <img id="dailyImg" src="" alt="">
+                    </div>
+                    <div class="daily-info">
+                        <div class="daily-names">
+                            <div class="daily-de" id="dailyDe"></div>
+                            <div class="daily-ar" id="dailyAr" lang="ar" dir="rtl"></div>
+                        </div>
+                        <p class="daily-example" id="dailyExample"></p>
+                        <div class="daily-actions">
+                            <button id="dailySpeakBtn" class="control-button small" type="button">
+                                🔊 Aussprache
+                            </button>
+                            <button id="dailyLearnBtn" class="control-button small" type="button">
+                                ★ Als gelernt zählen
+                            </button>
+                        </div>
+                        <div class="daily-hint" id="dailyHint"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1786,6 +1930,16 @@
     const certListEl = document.getElementById('certList');
     const generateCertBtn = document.getElementById('generateCertBtn');
 
+    const dailyTitleEl = document.getElementById('dailyTitle');
+    const dailyImgEl = document.getElementById('dailyImg');
+    const dailyDeEl = document.getElementById('dailyDe');
+    const dailyArEl = document.getElementById('dailyAr');
+    const dailyExampleEl = document.getElementById('dailyExample');
+    const dailyHintEl = document.getElementById('dailyHint');
+    const refreshDailyBtn = document.getElementById('refreshDailyBtn');
+    const dailySpeakBtn = document.getElementById('dailySpeakBtn');
+    const dailyLearnBtn = document.getElementById('dailyLearnBtn');
+
     let searchQuery = '';
     let activeFilter = 'all';
 
@@ -1823,6 +1977,8 @@
         correct: 0
     };
 
+    let dailyOffset = 0;
+
     function saveLearned() {
         localStorage.setItem(LEARNED_KEY, JSON.stringify(Array.from(learnedSet)));
     }
@@ -1853,6 +2009,44 @@
             return;
         }
         quizInfo.textContent = `Schnell-Quiz (A1): ${quizStats.correct} / ${quizStats.total} richtig`;
+    }
+
+    function getDayIndex(offset = 0) {
+        const today = new Date();
+        const startOfYear = new Date(today.getFullYear(), 0, 0);
+        const diff = today - startOfYear;
+        const oneDay = 1000 * 60 * 60 * 24;
+        const dayOfYear = Math.floor(diff / oneDay);
+        const rawIndex = (dayOfYear + offset) % totalFruits;
+        return rawIndex < 0 ? rawIndex + totalFruits : rawIndex;
+    }
+
+    function getDailyFruit() {
+        if (!fruits.length) return null;
+        return fruits[getDayIndex(dailyOffset)];
+    }
+
+    function updateDailyLearnButton(fruit) {
+        if (!fruit) return;
+        const learned = learnedSet.has(fruit.id);
+        dailyLearnBtn.textContent = learned ? '✓ Schon gelernt' : '★ Als gelernt zählen';
+        dailyLearnBtn.classList.toggle('active', learned);
+    }
+
+    function renderDailyChallenge() {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+
+        dailyTitleEl.textContent = `Fokus des Tages · ${fruit.levelCode}`;
+        dailyImgEl.src = fruit.img;
+        dailyImgEl.alt = fruit.alt || '';
+        dailyDeEl.textContent = `${fruit.article} ${fruit.deName}`;
+        dailyArEl.textContent = fruit.arName;
+        dailyExampleEl.textContent = `${fruit.exampleDe} — ${fruit.exampleAr}`;
+        dailyHintEl.textContent = `${fruit.category} · ${fruit.genusHint}`;
+        dailySpeakBtn.disabled = !supportsSpeech;
+
+        updateDailyLearnButton(fruit);
     }
 
     function normalizeText(str) {
@@ -2046,6 +2240,34 @@
 
     printBtn.addEventListener('click', () => {
         window.print();
+    });
+
+    refreshDailyBtn.addEventListener('click', () => {
+        if (!totalFruits) return;
+        dailyOffset = (dailyOffset + 1) % totalFruits;
+        renderDailyChallenge();
+    });
+
+    dailySpeakBtn.addEventListener('click', () => {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+        speakGerman(`${fruit.article} ${fruit.deName}`);
+    });
+
+    dailyLearnBtn.addEventListener('click', () => {
+        const fruit = getDailyFruit();
+        if (!fruit) return;
+
+        if (learnedSet.has(fruit.id)) {
+            learnedSet.delete(fruit.id);
+        } else {
+            learnedSet.add(fruit.id);
+        }
+
+        saveLearned();
+        updateProgressUI();
+        renderFruits();
+        renderDailyChallenge();
     });
 
     // ==============================
@@ -2289,6 +2511,7 @@
     // رسم أولي
     // ==============================
     renderFruits();
+    renderDailyChallenge();
     renderCertificates();
     renderCertIcons();
 </script>
