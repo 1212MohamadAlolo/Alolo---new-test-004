@@ -421,6 +421,106 @@
             gap: 0.35rem;
         }
 
+        .daily-challenge {
+            margin-top: 0.6rem;
+            padding: 0.85rem 0.9rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(7, 17, 32, 0.95);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .daily-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .daily-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .daily-title {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .daily-body {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .daily-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .daily-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .daily-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .daily-names {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            align-items: baseline;
+            font-size: 0.95rem;
+        }
+
+        .daily-de {
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.18rem 0.5rem;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .daily-ar {
+            color: var(--yellow-soft);
+            font-weight: 600;
+        }
+
+        .daily-example {
+            font-size: 0.82rem;
+            opacity: 0.95;
+        }
+
+        .daily-hint {
+            font-size: 0.78rem;
+            opacity: 0.85;
+        }
+
+        .daily-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
         .progress-track {
             flex: 1 1 180px;
             height: 0.55rem;
@@ -867,6 +967,158 @@
             margin-bottom: 0.75rem;
         }
 
+        .idea-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .idea-select,
+        .idea-toggle-btn {
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: inherit;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+        }
+
+        .idea-select:focus,
+        .idea-toggle-btn:focus {
+            outline: 2px solid var(--yellow-soft);
+            outline-offset: 2px;
+            border-color: var(--yellow-soft);
+        }
+
+        .idea-toggle-btn[aria-pressed="true"] {
+            background: rgba(34, 197, 94, 0.18);
+            border-color: rgba(34, 197, 94, 0.7);
+        }
+
+        .idea-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .idea-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .idea-counter {
+            font-size: 0.9rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+        }
+
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .idea-card {
+            border-radius: var(--radius-card);
+            padding: 0.85rem;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: grid;
+            gap: 0.35rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-card h4 {
+            font-size: 1rem;
+        }
+
+        .idea-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .idea-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .idea-tag {
+            font-size: 0.75rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .idea-meta {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .idea-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .idea-toggle {
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: inherit;
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .idea-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .idea-card-done {
+            border-color: rgba(54, 211, 153, 0.6);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(255, 255, 255, 0.05));
+        }
+
+        .idea-empty {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .idea-card-done .idea-toggle {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.7);
+        }
+
+        .idea-board {
+            margin: 1.5rem 0 0;
+            padding: 1rem;
+            border-radius: var(--radius-card);
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .idea-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: baseline;
+            margin-bottom: 0.75rem;
+        }
+
         .idea-title {
             font-size: 1.1rem;
             font-weight: 700;
@@ -1142,6 +1394,21 @@
 
         body[data-theme="light"] .cert-text-ar {
             color: #b7791f;
+        }
+
+        body[data-theme="light"] .idea-board {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(11, 35, 64, 0.12);
+        }
+
+        body[data-theme="light"] .idea-toggle {
+            border-color: rgba(11, 35, 64, 0.35);
+            background: rgba(11, 35, 64, 0.05);
         }
 
         body[data-theme="light"] .idea-board {
@@ -2098,6 +2365,57 @@
         }
     ];
 
+    const roadmapIdeas = [
+        {
+            id: 'streaks',
+            title: 'Streak & Wochenziel',
+            desc: 'Ein Wochenziel (z. B. 70 XP) mit Streak-Anzeige motiviert zum täglichen Lernen und könnte an den XP-Pillen andocken.',
+            tags: ['Motivation', 'XP'],
+            impact: 'hoch',
+            effort: 'mittel'
+        },
+        {
+            id: 'flashcards',
+            title: 'Spaced Repetition Karten',
+            desc: 'Kleine Wiederholungs-Decks, die automatisch ungelernte Früchte häufiger zeigen. Ideal als zweiter Modus neben dem Schnell-Quiz.',
+            tags: ['Lernlogik', 'Quiz'],
+            impact: 'hoch',
+            effort: 'hoch'
+        },
+        {
+            id: 'audio-clips',
+            title: 'Offline Audio-Clips',
+            desc: 'Kurze, lokal zwischengespeicherte Audio-Snippets pro Frucht, damit die Aussprache auch ohne Netz abrufbar bleibt.',
+            tags: ['PWA', 'Barrierefreiheit'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'achievements',
+            title: 'Mini-Erfolge & Abzeichen',
+            desc: 'Badges für „erste 5 Karten“, „alle Zitrusfrüchte“ oder „3 Tage am Stück gelernt“ verknüpfen XP mit klaren Etappen.',
+            tags: ['Gamification'],
+            impact: 'mittel',
+            effort: 'niedrig'
+        },
+        {
+            id: 'print-pack',
+            title: 'Druckbares Kärtchen-Paket',
+            desc: 'Export als druckfreundliche Lernkarten mit Vorder-/Rückseite (DE/AR + Beispielsatz) für Offline-Übung.',
+            tags: ['Druck', 'Offline'],
+            impact: 'mittel',
+            effort: 'mittel'
+        },
+        {
+            id: 'accessibility',
+            title: 'Barrierefreiheit & Tastatursteuerung',
+            desc: 'Fokus-Ring, ARIA-Rollen und Tastaturkürzel (Nächste Karte, Flip, Markieren) verbessern die Nutzung auf Desktop.',
+            tags: ['A11y'],
+            impact: 'hoch',
+            effort: 'niedrig'
+        }
+    ];
+
     // ==============================
     // عناصر عامة و state
     // ==============================
@@ -2124,6 +2442,16 @@
 
     const certListEl = document.getElementById('certList');
     const generateCertBtn = document.getElementById('generateCertBtn');
+
+    const dailyTitleEl = document.getElementById('dailyTitle');
+    const dailyImgEl = document.getElementById('dailyImg');
+    const dailyDeEl = document.getElementById('dailyDe');
+    const dailyArEl = document.getElementById('dailyAr');
+    const dailyExampleEl = document.getElementById('dailyExample');
+    const dailyHintEl = document.getElementById('dailyHint');
+    const refreshDailyBtn = document.getElementById('refreshDailyBtn');
+    const dailySpeakBtn = document.getElementById('dailySpeakBtn');
+    const dailyLearnBtn = document.getElementById('dailyLearnBtn');
 
     const dailyTitleEl = document.getElementById('dailyTitle');
     const dailyImgEl = document.getElementById('dailyImg');
