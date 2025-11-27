@@ -33,7 +33,9 @@
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: linear-gradient(135deg, var(--blue) 50%, var(--yellow) 50%);
+            background: radial-gradient(circle at 20% 20%, rgba(255, 223, 128, 0.15), transparent 32%),
+                        radial-gradient(circle at 80% 0%, rgba(11, 35, 64, 0.28), transparent 38%),
+                        linear-gradient(135deg, var(--blue) 55%, var(--yellow));
             color: var(--text-light);
             min-height: 100vh;
             display: flex;
@@ -41,10 +43,104 @@
             transition: background 0.3s ease, color 0.3s ease;
         }
 
+        .page-shell {
+            width: min(1200px, 100% - 2rem);
+            margin: 0 auto;
+            padding: 1.8rem 0 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .shell-block {
+            width: 100%;
+        }
+
         header {
             text-align: center;
             padding: 1.8rem 1rem 0.5rem;
             position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1rem;
+            align-items: stretch;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 1.2rem 1.1rem;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(6px);
+        }
+
+        .hero-card h2 {
+            font-size: clamp(1.35rem, 2vw, 1.6rem);
+            margin-bottom: 0.3rem;
+        }
+
+        .hero-lede {
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .meta-list {
+            list-style: none;
+            display: grid;
+            gap: 0.45rem;
+            margin: 0.75rem 0;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.93rem;
+            padding: 0.55rem 0.65rem;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .meta-label {
+            opacity: 0.78;
+        }
+
+        .meta-value {
+            font-weight: 600;
+        }
+
+        .meta-footnote {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .hero-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.7rem;
+        }
+
+        .chip {
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-size: 0.83rem;
+        }
+
+        .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            font-size: 0.78rem;
+            opacity: 0.72;
+            margin-bottom: 0.35rem;
         }
 
         .badge {
@@ -105,14 +201,52 @@
 
         /* شريط الحالة (XP + الشهادات) */
         .top-status {
-            max-width: 1200px;
-            margin: 0.9rem auto 0;
-            padding: 0 1rem 0.7rem;
+            width: 100%;
+            margin: 0.4rem 0 0;
+            padding: 0 0 0.7rem;
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
             justify-content: center;
             align-items: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 0.9rem;
+            margin: 0.4rem 0 0.3rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 0.95rem 1rem;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .stat-card.accent {
+            background: linear-gradient(135deg, rgba(245, 195, 59, 0.15), rgba(255, 223, 128, 0.1));
+            border-color: rgba(255, 255, 255, 0.24);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            font-weight: 700;
+            margin: 0.05rem 0;
+        }
+
+        .stat-context {
+            font-size: 0.9rem;
+            opacity: 0.88;
         }
 
         .xp-pill {
@@ -167,9 +301,9 @@
 
         /* تنقّل الصفحات مثل تبويبات Duolingo */
         .main-nav {
-            max-width: 1200px;
-            margin: 0.4rem auto 0;
-            padding: 0 1rem 0.8rem;
+            width: 100%;
+            margin: 0.4rem 0 0;
+            padding: 0 0 0.8rem;
             display: flex;
             justify-content: center;
             gap: 0.4rem;
@@ -210,9 +344,8 @@
 
         main {
             width: 100%;
-            max-width: 1200px;
-            margin: 0.6rem auto 3rem;
-            padding: 0 1rem 2rem;
+            margin: 0.6rem 0 3rem;
+            padding: 0 0 2rem;
         }
 
         .page {
@@ -225,8 +358,8 @@
         }
 
         .data-status {
-            max-width: 1200px;
-            margin: 0.2rem auto 0.8rem;
+            width: 100%;
+            margin: 0.2rem 0 0.8rem;
             padding: 0.75rem 1rem;
             border-radius: 14px;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1289,7 +1422,8 @@
     </style>
 </head>
 <body data-theme="dark">
-<header>
+<div class="page-shell">
+<header class="shell-block">
     <button class="theme-toggle" type="button" aria-label="Farbschema wechseln">
         <span class="icon" aria-hidden="true">🌙</span>
         <span class="label">Nachtmodus</span>
@@ -1308,8 +1442,65 @@
     </p>
 </header>
 
+<section class="hero-grid shell-block" aria-label="Alolo Überblick">
+    <article class="hero-card">
+        <div class="eyebrow">Visual Lab</div>
+        <h2>Kuratiertes Lernen mit klarer Linie</h2>
+        <p class="hero-lede">
+            Hochwertige Karten mit Bild, Aussprache und Beispielsatz in einem ruhigen, zweisprachigen Interface.
+            Jede Interaktion bleibt konsistent – vom Suchfeld bis zum Zertifikat.
+        </p>
+        <div class="hero-chips">
+            <span class="chip">Bild + Ton + Beispielsatz</span>
+            <span class="chip">Deutsch &amp; عربي</span>
+            <span class="chip">Druck- &amp; PWA-ready</span>
+        </div>
+    </article>
+    <article class="hero-card">
+        <div class="eyebrow">Datensatz</div>
+        <ul class="meta-list">
+            <li class="meta-item">
+                <span class="meta-label">Version</span>
+                <span class="meta-value" id="datasetVersion">–</span>
+            </li>
+            <li class="meta-item">
+                <span class="meta-label">Aktualisiert</span>
+                <span class="meta-value" id="datasetUpdated">–</span>
+            </li>
+            <li class="meta-item">
+                <span class="meta-label">Quelle</span>
+                <span class="meta-value" id="datasetSource">–</span>
+            </li>
+        </ul>
+        <p class="meta-footnote">Alle Karten werden live aus der JSON-Quelle geladen und bleiben offline verfügbar.</p>
+    </article>
+</section>
+
+<section class="stats-grid shell-block" aria-label="Kennzahlen zum Lernfortschritt">
+    <article class="stat-card">
+        <div class="stat-label">Karten insgesamt</div>
+        <div class="stat-value" id="statTotalCards">0</div>
+        <div class="stat-context">Verfügbare Illustrationen im Katalog</div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-label">Gelernt</div>
+        <div class="stat-value" id="statLearnedCards">0</div>
+        <div class="stat-context">Markiert als abgeschlossen · <span id="statXpValue">0 XP</span></div>
+    </article>
+    <article class="stat-card">
+        <div class="stat-label">Offene Karten</div>
+        <div class="stat-value" id="statRemainingCards">0</div>
+        <div class="stat-context">Bereit für das nächste Lernintervall</div>
+    </article>
+    <article class="stat-card accent">
+        <div class="stat-label">Quiz-Bilanz</div>
+        <div class="stat-value" id="statQuizScore">–</div>
+        <div class="stat-context">Aktualisiert nach jedem Schnell-Quiz</div>
+    </article>
+</section>
+
 <!-- شريط الحالة مثل Duolingo (XP + Zertifikate) -->
-<div class="top-status">
+<div class="top-status shell-block">
     <div class="xp-pill">
         <span class="xp-pill-icon">⭐</span>
         <span><span id="xpValue">0</span> XP</span>
@@ -1321,7 +1512,7 @@
 </div>
 
 <!-- تنقّل الصفحات -->
-<nav class="main-nav" aria-label="Hauptnavigation">
+<nav class="main-nav shell-block" aria-label="Hauptnavigation">
     <button class="nav-tab active" data-target="page-learn" type="button">
         <span class="nav-tab-icon">📚</span>
         <span>Lernen</span>
@@ -1336,7 +1527,7 @@
     </button>
 </nav>
 
-<div id="dataStatus" class="data-status" aria-live="polite" aria-atomic="true" hidden>
+<div id="dataStatus" class="data-status shell-block" aria-live="polite" aria-atomic="true" hidden>
     <div class="data-status-row">
         <div class="data-status-text">
             <div id="dataStatusMessage" class="data-status-message"></div>
@@ -1348,7 +1539,7 @@
     </div>
 </div>
 
-<main role="main">
+<main role="main" class="shell-block">
     <!-- صفحة 1: التعلّم (الكروت) -->
     <section id="page-learn" class="page page-active" aria-label="Lern-Katalog">
         <section class="controls" aria-label="Filter und Lernfortschritt">
@@ -1452,6 +1643,8 @@
 <footer>
     © 2025 · Alolo Visual Language Lab · تصميم ثنائي اللغة (Deutsch / عربي) لتعلّم المفردات بأسلوب بصري موحّد.
 </footer>
+
+</div>
 
 <!-- Modal لتكبير الصور -->
 <div class="image-modal" aria-hidden="true">
@@ -1589,6 +1782,14 @@
     const certIconsEl = document.getElementById('certIcons');
     const navTabs = document.querySelectorAll('.nav-tab');
     const pages = document.querySelectorAll('.page');
+    const statTotalCardsEl = document.getElementById('statTotalCards');
+    const statLearnedCardsEl = document.getElementById('statLearnedCards');
+    const statRemainingCardsEl = document.getElementById('statRemainingCards');
+    const statQuizScoreEl = document.getElementById('statQuizScore');
+    const statXpValueEl = document.getElementById('statXpValue');
+    const datasetVersionEl = document.getElementById('datasetVersion');
+    const datasetUpdatedEl = document.getElementById('datasetUpdated');
+    const datasetSourceEl = document.getElementById('datasetSource');
 
     const lightningQuizBtn = document.getElementById('lightningQuizBtn');
     const quizSectionPage = document.getElementById('page-quiz');
@@ -1658,16 +1859,19 @@
         progressText.textContent = `${learnedCount} / ${total}`;
         const ratio = total > 0 ? (learnedCount / total) * 100 : 0;
         progressBar.style.width = `${ratio}%`;
-        calculateXP();
+        const xp = calculateXP();
+        updateOverviewStats(xp);
     }
 
     function updateQuizInfo() {
         if (quizStats.total === 0) {
             quizInfo.textContent = '';
             quizMeta.textContent = '';
+            updateOverviewStats();
             return;
         }
         quizInfo.textContent = `Schnell-Quiz (A1): ${quizStats.correct} / ${quizStats.total} richtig`;
+        updateOverviewStats();
     }
 
     function normalizeText(str) {
@@ -1679,6 +1883,43 @@
         dataStatusMetaEl.textContent = metaMessage;
         dataStatusEl.dataset.state = state;
         dataStatusEl.hidden = !(message || metaMessage);
+    }
+
+    function updateDatasetMetaUI(meta) {
+        if (datasetVersionEl) {
+            datasetVersionEl.textContent = meta?.version || '–';
+        }
+        if (datasetUpdatedEl) {
+            datasetUpdatedEl.textContent = meta?.updated || '–';
+        }
+        if (datasetSourceEl) {
+            datasetSourceEl.textContent = meta?.source || '–';
+        }
+    }
+
+    function updateOverviewStats(currentXp = null) {
+        const total = totalFruits || fruits.length;
+        const learnedCount = learnedSet.size;
+        const remaining = Math.max(total - learnedCount, 0);
+        const xp = currentXp !== null ? currentXp : calculateXP();
+
+        if (statTotalCardsEl) {
+            statTotalCardsEl.textContent = total;
+        }
+        if (statLearnedCardsEl) {
+            statLearnedCardsEl.textContent = learnedCount;
+        }
+        if (statRemainingCardsEl) {
+            statRemainingCardsEl.textContent = remaining;
+        }
+        if (statXpValueEl) {
+            statXpValueEl.textContent = `${xp} XP`;
+        }
+        if (statQuizScoreEl) {
+            statQuizScoreEl.textContent = quizStats.total
+                ? `${quizStats.correct} / ${quizStats.total}`
+                : '—';
+        }
     }
 
     function renderLoadingSkeleton(count = 6) {
@@ -2142,6 +2383,8 @@
             totalFruits = fruits.length;
             dataLoaded = true;
 
+            updateDatasetMetaUI(dataMeta);
+
             const metaText = dataMeta
                 ? `Aktualisiert am ${dataMeta.updated || 'unbekannt'} · Version ${dataMeta.version || '—'}`
                 : '';
@@ -2152,6 +2395,8 @@
             fruits = [];
             tests = [];
             totalFruits = 0;
+
+            updateDatasetMetaUI(null);
 
             const failMsg = error.name === 'AbortError'
                 ? 'Zeitüberschreitung: Die Verbindung ist gerade zu langsam.'
