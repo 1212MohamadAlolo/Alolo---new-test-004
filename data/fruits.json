@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "version": "1.1.1",
+    "updated": "2025-11-27",
+    "source": "Alolo Früchte-Katalog",
+    "description": "Datensatz für Karten, Quiz und Zertifikate"
+  },
   "fruits": [
     {
       "id": "apfel",
