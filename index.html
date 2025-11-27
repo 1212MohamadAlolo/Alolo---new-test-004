@@ -844,19 +844,25 @@
             font-size: 0.9rem;
             margin-top: 0.25rem;
             color: var(--yellow-soft);
-            text-align: left;
+            text-align: right;
             transition: transform 0.15s ease;
         }
 
         .code-path {
             margin-top: 0.35rem;
-            font-size: 0.7rem;
+            font-size: 0.78rem;
             opacity: 0.9;
-            font-family: "Fira Code", "Cascadia Code", monospace;
             background: rgba(0, 0, 0, 0.4);
-            padding: 0.3rem 0.45rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 999px;
             display: inline-block;
+            color: var(--yellow-soft);
+            text-decoration: none;
+        }
+
+        .code-path:hover {
+            background: rgba(0, 0, 0, 0.6);
+            text-decoration: underline;
         }
 
         .card-footer-row {
@@ -891,7 +897,7 @@
             font-size: 0.9rem;
         }
 
-        .flip-toggle {
+        .example-btn {
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             background: transparent;
@@ -904,7 +910,7 @@
             color: var(--text-light);
         }
 
-        .flip-toggle:hover {
+        .example-btn:hover {
             background: rgba(0, 0, 0, 0.35);
         }
 
@@ -921,33 +927,46 @@
             opacity: 0.9;
         }
 
-        /* الوجه الخلفي: مثال جملة */
-        .card-back-content {
-            padding: 0.9rem 1rem 1.1rem;
-            position: relative;
-            z-index: 1;
+        /* صندوق المثال داخل البطاقة */
+        .example-box {
+            margin-top: 0.55rem;
+            padding: 0.6rem 0.65rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(0, 0, 0, 0.28);
+            min-height: 72px;
             display: flex;
             flex-direction: column;
+            gap: 0.35rem;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .example-box:hover {
+            border-color: rgba(245, 195, 59, 0.45);
+        }
+
+        .example-box.empty {
+            align-items: center;
             justify-content: center;
-            height: 100%;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            text-align: center;
         }
 
-        .example-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            opacity: 0.75;
-            margin-bottom: 0.3rem;
+        .example-line {
+            font-size: 0.93rem;
+            line-height: 1.4;
         }
 
-        .example-de {
-            font-size: 0.95rem;
-            margin-bottom: 0.25rem;
+        .example-line.de {
+            direction: ltr;
         }
 
-        .example-ar {
-            font-size: 0.9rem;
+        .example-line.ar {
             color: var(--yellow-soft);
+            direction: rtl;
+            text-align: right;
+            font-size: 0.95rem;
         }
 
         /* ===============================
@@ -1283,7 +1302,8 @@
 
         body[data-theme="light"] .code-path {
             background: rgba(15, 23, 42, 0.04);
-            color: #4b5563;
+            color: #b7791f;
+            border: 1px solid rgba(17, 24, 39, 0.08);
         }
 
         body[data-theme="light"] footer {
@@ -2275,6 +2295,35 @@
     });
 
     // ==============================
+    // عرض المثال داخل البطاقة
+    // ==============================
+    function showExample(cardId) {
+        const fruit = fruits.find(f => f.id === cardId);
+        if (!fruit) return;
+
+        const exampleBox = document.getElementById(`example-${cardId}`);
+        if (!exampleBox) return;
+
+        exampleBox.classList.remove('empty');
+        exampleBox.innerHTML = '';
+
+        const deLine = document.createElement('div');
+        deLine.className = 'example-line de';
+        deLine.textContent = fruit.exampleDe;
+        deLine.setAttribute('lang', 'de');
+        deLine.setAttribute('dir', 'ltr');
+
+        const arLine = document.createElement('div');
+        arLine.className = 'example-line ar';
+        arLine.textContent = fruit.exampleAr;
+        arLine.setAttribute('lang', 'ar');
+        arLine.setAttribute('dir', 'rtl');
+
+        exampleBox.appendChild(deLine);
+        exampleBox.appendChild(arLine);
+    }
+
+    // ==============================
     // رسم البطاقات (الكatalog)
     // ==============================
     function renderFruits() {
@@ -2303,10 +2352,10 @@
                         <div class="card-body">
                             <div class="de-line">
                                 <div class="de-main">
-                                    <span class="article" title="${fruit.genusHint}">
+                                    <span class="article" title="${fruit.genusHint}" dir="ltr">
                                         ${fruit.article}
                                     </span>
-                                    <span class="de-name">${fruit.deName}</span>
+                                    <span class="de-name" dir="ltr">${fruit.deName}</span>
                                     <button class="speak-btn" type="button" aria-label="Aussprache anhören">
                                         🔊
                                     </button>
@@ -2317,7 +2366,7 @@
                                 }
                             </div>
                             <div class="ar-name" lang="ar" dir="rtl">${fruit.arName}</div>
-                            <div class="code-path">${fruit.codePath}</div>
+                            <a class="code-path" href="${fruit.img}" target="_blank" rel="noopener noreferrer">Bild öffnen</a>
                             <div class="card-footer-row">
                                 <button class="learn-toggle" type="button">
                                     <span class="learn-icon">${learnedSet.has(fruit.id) ? '★' : '☆'}</span>
@@ -2325,17 +2374,13 @@
                                         ${learnedSet.has(fruit.id) ? 'Gelernt' : 'Als gelernt markieren'}
                                     </span>
                                 </button>
-                                <button class="flip-toggle" type="button">
-                                    ↺ Beispiel
+                                <button class="example-btn" type="button" data-card-id="${fruit.id}">
+                                    📖 Beispiel
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card-face card-back">
-                        <div class="card-back-content">
-                            <div class="example-label">Beispielsatz</div>
-                            <div class="example-de">${fruit.exampleDe}</div>
-                            <div class="example-ar" lang="ar" dir="rtl">${fruit.exampleAr}</div>
+                            <div class="example-box empty" id="example-${fruit.id}" aria-live="polite">
+                                Beispiel anzeigen
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2347,10 +2392,10 @@
                 openImageModal(fruit.img, fruit.alt, caption);
             });
 
-            // زر قلب البطاقة
-            const flipBtn = card.querySelector('.flip-toggle');
-            flipBtn.addEventListener('click', () => {
-                card.classList.toggle('flipped');
+            // زر المثال
+            const exampleBtn = card.querySelector('.example-btn');
+            exampleBtn.addEventListener('click', () => {
+                showExample(fruit.id);
             });
 
             // زر النطق
