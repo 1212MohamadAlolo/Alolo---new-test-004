@@ -224,6 +224,56 @@
             display: block;
         }
 
+        .data-status {
+            max-width: 1200px;
+            margin: 0.2rem auto 0.8rem;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .data-status[hidden] {
+            display: none;
+        }
+
+        .data-status[data-state="error"] {
+            border-color: rgba(239, 68, 68, 0.6);
+            background: rgba(239, 68, 68, 0.18);
+            color: #fecdd3;
+        }
+
+        .data-status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .data-status-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .data-status-message {
+            font-weight: 600;
+        }
+
+        .data-status-meta {
+            opacity: 0.85;
+            font-size: 0.85rem;
+        }
+
+        .data-status-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
@@ -281,6 +331,11 @@
             gap: 0.35rem;
             transition: background 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
             white-space: nowrap;
+        }
+
+        .control-button.ghost {
+            background: rgba(255, 255, 255, 0.08);
+            border-style: dashed;
         }
 
         .control-button.small {
@@ -456,6 +511,40 @@
             background: transparent;
             border-radius: var(--radius-card);
             perspective: 1000px;
+        }
+
+        .card.skeleton .card-inner {
+            min-height: 220px;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.08) 25%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.08) 75%);
+            background-size: 300% 300%;
+            animation: shimmer 1.2s ease-in-out infinite;
+            border-style: dashed;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .skeleton-media {
+            width: 100%;
+            height: 120px;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 14px;
+            margin-bottom: 0.6rem;
+        }
+
+        .skeleton-line {
+            height: 10px;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 999px;
+            margin-bottom: 0.35rem;
+        }
+
+        .skeleton-line.short {
+            width: 65%;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .card-inner {
@@ -825,6 +914,18 @@
             border-color: #f5c33b;
         }
 
+        body[data-theme="light"] .data-status {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(16, 42, 67, 0.15);
+            color: #102a43;
+        }
+
+        body[data-theme="light"] .data-status[data-state="error"] {
+            background: rgba(239, 68, 68, 0.12);
+            border-color: rgba(239, 68, 68, 0.35);
+            color: #7f1d1d;
+        }
+
         body[data-theme="light"] .theme-toggle {
             background: rgba(255, 255, 255, 0.9);
             color: #102a43;
@@ -861,6 +962,11 @@
             background: rgba(255, 255, 255, 1);
         }
 
+        body[data-theme="light"] .control-button.ghost {
+            background: rgba(17, 24, 39, 0.04);
+            border-color: rgba(17, 24, 39, 0.15);
+        }
+
         body[data-theme="light"] .control-button.active {
             background: #111827;
             color: #f9fafb;
@@ -871,6 +977,15 @@
             background: rgba(255, 255, 255, 0.96);
             border-color: rgba(16, 42, 67, 0.16);
             box-shadow: 0 10px 20px rgba(15, 23, 42, 0.12);
+        }
+
+        body[data-theme="light"] .card.skeleton .card-inner {
+            background: linear-gradient(120deg, rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.06) 75%);
+        }
+
+        body[data-theme="light"] .skeleton-media,
+        body[data-theme="light"] .skeleton-line {
+            background: rgba(0, 0, 0, 0.08);
         }
 
         body[data-theme="light"] .card-back {
@@ -1220,6 +1335,18 @@
     </button>
 </nav>
 
+<div id="dataStatus" class="data-status" aria-live="polite" aria-atomic="true" hidden>
+    <div class="data-status-row">
+        <div class="data-status-text">
+            <div id="dataStatusMessage" class="data-status-message"></div>
+            <div id="dataStatusMeta" class="data-status-meta"></div>
+        </div>
+        <div class="data-status-actions">
+            <button id="reloadDataBtn" class="control-button ghost" type="button">🔄 Daten neu laden</button>
+        </div>
+    </div>
+</div>
+
 <main role="main">
     <!-- صفحة 1: التعلّم (الكروت) -->
     <section id="page-learn" class="page page-active" aria-label="Lern-Katalog">
@@ -1434,337 +1561,23 @@
     }
 
     // ==============================
-    // بيانات الفواكه
+    // بيانات الفواكه (يتم تحميلها خارجيًا)
     // ==============================
-    const fruits = [
-        {
-            id: 'apfel',
-            article: 'der',
-            genusHint: 'maskulines Nomen (der)',
-            deName: 'Apfel',
-            arName: 'تفاحة',
-            level: 'Niveau A1 · Obst',
-            levelCode: 'A1',
-            category: 'Kernobst',
-            tagGroup: 'Kernobst',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/apfel.jpg',
-            alt: 'Apfel — تفاحة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/apfel.jpg',
-            exampleDe: 'Ich esse jeden Morgen einen Apfel.',
-            exampleAr: 'آكل تفاحة كل صباح.'
-        },
-        {
-            id: 'banane',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Banane',
-            arName: 'موزة',
-            level: 'Niveau A1 · Obst',
-            levelCode: 'A1',
-            category: 'Obst',
-            tagGroup: 'Obst',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/banane.jpg',
-            alt: 'Banane — موزة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/banane.jpg',
-            exampleDe: 'Die Banane ist sehr süß.',
-            exampleAr: 'الموزة حلوة جداً.'
-        },
-        {
-            id: 'orange',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Orange',
-            arName: 'برتقالة',
-            level: 'Zitrusfrucht',
-            levelCode: 'A1',
-            category: 'Zitrusfrucht',
-            tagGroup: 'Zitrusfrucht',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/orange.jpg',
-            alt: 'Orange — برتقالة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/orange.jpg',
-            exampleDe: 'Zum Frühstück trinke ich Orangensaft.',
-            exampleAr: 'أشرب عصير البرتقال على الفطور.'
-        },
-        {
-            id: 'traube',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Traube',
-            arName: 'عنب',
-            level: 'Niveau A1 · Obst',
-            levelCode: 'A1',
-            category: 'Beere',
-            tagGroup: 'Beere',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/traube.jpg',
-            alt: 'Traube — عنب',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/traube.jpg',
-            exampleDe: 'Die Trauben sind frisch und lecker.',
-            exampleAr: 'العنب طازج ولذيذ.'
-        },
-        {
-            id: 'erdbeere',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Erdbeere',
-            arName: 'فراولة',
-            level: 'Beere',
-            levelCode: 'A1',
-            category: 'Beere',
-            tagGroup: 'Beere',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/erdbeere.jpg',
-            alt: 'Erdbeere — فراولة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/erdbeere.jpg',
-            exampleDe: 'Die Kinder mögen Erdbeeren mit Sahne.',
-            exampleAr: 'الأطفال يحبون الفراولة مع الكريمة.'
-        },
-        {
-            id: 'kirsche',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Kirsche',
-            arName: 'كرز',
-            level: 'Beere',
-            levelCode: 'A2',
-            category: 'Beere',
-            tagGroup: 'Beere',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kirsche.jpg',
-            alt: 'Kirsche — كرز',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kirsche.jpg',
-            exampleDe: 'Der Kuchen mit Kirschen schmeckt gut.',
-            exampleAr: 'الكعكة بالكرز طعمها لذيذ.'
-        },
-        {
-            id: 'ananas',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Ananas',
-            arName: 'أناناس',
-            level: 'Exotisches Obst',
-            levelCode: 'A2',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/ananas.jpg',
-            alt: 'Ananas — أناناس',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/ananas.jpg',
-            exampleDe: 'Die Ananas ist sehr saftig.',
-            exampleAr: 'الأناناس عصيري جداً.'
-        },
-        {
-            id: 'mango',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Mango',
-            arName: 'مانجا',
-            level: 'Exotisches Obst',
-            levelCode: 'A2',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/mango.jpg',
-            alt: 'Mango — مانجا',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/mango.jpg',
-            exampleDe: 'Mango ist meine Lieblingsfrucht.',
-            exampleAr: 'المانجا هي فاكهتي المفضّلة.'
-        },
-        {
-            id: 'birne',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Birne',
-            arName: 'إجّاصة',
-            level: 'Niveau A1 · Obst',
-            levelCode: 'A1',
-            category: 'Kernobst',
-            tagGroup: 'Kernobst',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/birne.jpg',
-            alt: 'Birne — إجّاصة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/birne.jpg',
-            exampleDe: 'Ich kaufe Birnen auf dem Markt.',
-            exampleAr: 'أشتري الإجاص من السوق.'
-        },
-        {
-            id: 'melone',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Melone',
-            arName: 'بطيخ / شمّام',
-            level: 'Sommerobst',
-            levelCode: 'A1',
-            category: 'Obst',
-            tagGroup: 'Obst',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/melone.jpg',
-            alt: 'Melone — بطيخ / شمّام',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/melone.jpg',
-            exampleDe: 'Im Sommer essen wir gern Melone.',
-            exampleAr: 'في الصيف نحب أكل البطيخ.'
-        },
-        {
-            id: 'zitrone',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Zitrone',
-            arName: 'ليمونة',
-            level: 'Zitrusfrucht',
-            levelCode: 'A2',
-            category: 'Zitrusfrucht',
-            tagGroup: 'Zitrusfrucht',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/zitrone.jpg',
-            alt: 'Zitrone — ليمونة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/zitrone.jpg',
-            exampleDe: 'Der Tee mit Zitrone ist warm.',
-            exampleAr: 'الشاي بالليمون دافئ.'
-        },
-        {
-            id: 'pflaume',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Pflaume',
-            arName: 'برقوق',
-            level: 'Niveau A2 · Obst',
-            levelCode: 'A2',
-            category: 'Obst',
-            tagGroup: 'Obst',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/pflaume.jpg',
-            alt: 'Pflaume — برقوق',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/pflaume.jpg',
-            exampleDe: 'Aus Pflaumen macht man Marmelade.',
-            exampleAr: 'يُصنع من البرقوق مربّى.'
-        },
-        {
-            id: 'kiwi',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Kiwi',
-            arName: 'كيوي',
-            level: 'Exotisches Obst',
-            levelCode: 'A2',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kiwi.jpg',
-            alt: 'Kiwi — كيوي',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kiwi.jpg',
-            exampleDe: 'Die Kiwi ist klein, aber gesund.',
-            exampleAr: 'الكيوي صغيرة لكنها صحية.'
-        },
-        {
-            id: 'grapefruit',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Grapefruit',
-            arName: 'جريب فروت',
-            level: 'Zitrusfrucht',
-            levelCode: 'A2',
-            category: 'Zitrusfrucht',
-            tagGroup: 'Zitrusfrucht',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/grapefruit.jpg',
-            alt: 'Grapefruit — جريب فروت',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/grapefruit.jpg',
-            exampleDe: 'Grapefruit schmeckt ein bisschen bitter.',
-            exampleAr: 'الجريب فروت طعمه مائل للمرارة.'
-        },
-        {
-            id: 'mandarine',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Mandarine',
-            arName: 'ماندرين / يوسفي',
-            level: 'Zitrusfrucht',
-            levelCode: 'A1',
-            category: 'Zitrusfrucht',
-            tagGroup: 'Zitrusfrucht',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/mandarine.jpg',
-            alt: 'Mandarine — ماندرين / يوسفي',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/mandarine.jpg',
-            exampleDe: 'Im Winter essen viele Leute Mandarinen.',
-            exampleAr: 'في الشتاء يأكل الكثير من الناس اليوسفي.'
-        },
-        {
-            id: 'kokosnuss',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Kokosnuss',
-            arName: 'جوز الهند',
-            level: 'Exotisches Obst',
-            levelCode: 'A2',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kokosnuss.jpg',
-            alt: 'Kokosnuss — جوز الهند',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/kokosnuss.jpg',
-            exampleDe: 'Aus der Kokosnuss trinkt man Kokoswasser.',
-            exampleAr: 'من ثمرة جوز الهند نشرب ماء جوز الهند.'
-        },
-        {
-            id: 'dattel',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Dattel',
-            arName: 'تمرة',
-            level: 'Niveau A1 · Obst',
-            levelCode: 'A1',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/dattel.jpg',
-            alt: 'Dattel — تمرة',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/dattel.jpg',
-            exampleDe: 'Im Ramadan essen viele Menschen Datteln.',
-            exampleAr: 'في رمضان يأكل الكثير من الناس التمر.'
-        },
-        {
-            id: 'feige',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Feige',
-            arName: 'تين',
-            level: 'Niveau A2 · Obst',
-            levelCode: 'A2',
-            category: 'Exotisch',
-            tagGroup: 'Exotisch',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/feige.jpg',
-            alt: 'Feige — تين',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/feige.jpg',
-            exampleDe: 'Die Feige wächst in warmen Ländern.',
-            exampleAr: 'التين ينمو في البلدان الدافئة.'
-        },
-        {
-            id: 'himbeere',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Himbeere',
-            arName: 'توت أحمر',
-            level: 'Beere',
-            levelCode: 'A2',
-            category: 'Beere',
-            tagGroup: 'Beere',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/himbeere.jpg',
-            alt: 'Himbeere — توت أحمر',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/himbeere.jpg',
-            exampleDe: 'Himbeeren sind sehr weich.',
-            exampleAr: 'التوت الأحمر طري جداً.'
-        },
-        {
-            id: 'brombeere',
-            article: 'die',
-            genusHint: 'feminines Nomen (die)',
-            deName: 'Brombeere',
-            arName: 'توت أسود',
-            level: 'Beere',
-            levelCode: 'A2',
-            category: 'Beere',
-            tagGroup: 'Beere',
-            img: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/brombeere.jpg',
-            alt: 'Brombeere — توت أسود',
-            codePath: 'https://1212mohamadalolo.github.io/Alolo---new-test-004/images/brombeere.jpg',
-            exampleDe: 'Die Brombeeren wachsen im Wald.',
-            exampleAr: 'التوت الأسود ينمو في الغابة.'
-        }
-    ];
-
-    const totalFruits = fruits.length;
+    let fruits = [];
+    let tests = [];
+    let totalFruits = 0;
+    let dataLoaded = false;
+    let dataMeta = null;
+    let isLoadingData = false;
 
     // ==============================
     // عناصر عامة و state
     // ==============================
     const gallery = document.querySelector('.gallery');
+    const dataStatusEl = document.getElementById('dataStatus');
+    const dataStatusMessageEl = document.getElementById('dataStatusMessage');
+    const dataStatusMetaEl = document.getElementById('dataStatusMeta');
+    const reloadDataBtn = document.getElementById('reloadDataBtn');
     const searchInput = document.getElementById('searchInput');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const progressText = document.getElementById('progressText');
@@ -1840,8 +1653,9 @@
 
     function updateProgressUI() {
         const learnedCount = learnedSet.size;
-        progressText.textContent = `${learnedCount} / ${totalFruits}`;
-        const ratio = totalFruits > 0 ? (learnedCount / totalFruits) * 100 : 0;
+        const total = totalFruits || fruits.length;
+        progressText.textContent = `${learnedCount} / ${total}`;
+        const ratio = total > 0 ? (learnedCount / total) * 100 : 0;
         progressBar.style.width = `${ratio}%`;
         calculateXP();
     }
@@ -1857,6 +1671,41 @@
 
     function normalizeText(str) {
         return (str || '').toString().trim().toLowerCase();
+    }
+
+    function setDataStatus(message, state = 'info', metaMessage = '') {
+        dataStatusMessageEl.textContent = message;
+        dataStatusMetaEl.textContent = metaMessage;
+        dataStatusEl.dataset.state = state;
+        dataStatusEl.hidden = !(message || metaMessage);
+    }
+
+    function renderLoadingSkeleton(count = 6) {
+        gallery.innerHTML = '';
+
+        for (let i = 0; i < count; i++) {
+            const card = document.createElement('article');
+            card.className = 'card skeleton';
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-face card-front" style="padding: 0.8rem 0.9rem; gap: 0.5rem;">
+                        <div class="skeleton-media" aria-hidden="true"></div>
+                        <div class="skeleton-line"></div>
+                        <div class="skeleton-line short"></div>
+                        <div class="skeleton-line" style="width: 80%;"></div>
+                    </div>
+                </div>
+            `;
+            gallery.appendChild(card);
+        }
+    }
+
+    function setControlsDisabled(disabled) {
+        lightningQuizBtn.disabled = disabled;
+        searchInput.disabled = disabled;
+        filterButtons.forEach(btn => {
+            btn.disabled = disabled;
+        });
     }
 
     function fruitMatchesSearch(fruit, query) {
@@ -2044,6 +1893,10 @@
         });
     });
 
+    reloadDataBtn.addEventListener('click', () => {
+        loadData({ force: true });
+    });
+
     printBtn.addEventListener('click', () => {
         window.print();
     });
@@ -2060,8 +1913,26 @@
         return a;
     }
 
+    function getQuizPool() {
+        if (tests.length > 0) {
+            return tests;
+        }
+        return fruits;
+    }
+
     function startLightningQuiz() {
-        const a1Fruits = fruits.filter(f => f.levelCode === 'A1');
+        if (!dataLoaded) {
+            setDataStatus('Daten werden geladen. Bitte einen Moment Geduld.', 'info');
+            return;
+        }
+
+        const pool = getQuizPool();
+        if (pool.length === 0) {
+            setDataStatus('Keine Daten für das Quiz verfügbar.', 'error');
+            return;
+        }
+
+        const a1Fruits = pool.filter(f => f.levelCode === 'A1');
         const shuffled = shuffleArray(a1Fruits);
         const subset = shuffled.slice(0, Math.min(7, shuffled.length)); // حتى 7 كروت
 
@@ -2237,6 +2108,68 @@
         renderCertIcons();
     }
 
+    async function loadData(options = { force: false }) {
+        if (isLoadingData) return;
+        isLoadingData = true;
+
+        setDataStatus('Daten werden geladen…', 'info', 'Verbindung wird hergestellt.');
+        renderLoadingSkeleton();
+        setControlsDisabled(true);
+        reloadDataBtn.disabled = true;
+
+        const slowTimer = setTimeout(() => {
+            setDataStatus('Langsamer Verbindungsaufbau…', 'info', 'Wir laden weiter. Bitte etwas Geduld.');
+        }, 1200);
+
+        const controller = new AbortController();
+        const timeoutTimer = setTimeout(() => controller.abort(), 10000);
+
+        try {
+            const response = await fetch('data/fruits.json', {
+                signal: controller.signal,
+                cache: options.force ? 'reload' : 'default'
+            });
+
+            if (!response.ok) {
+                throw new Error(`Request fehlgeschlagen mit Status ${response.status}`);
+            }
+
+            const data = await response.json();
+            fruits = Array.isArray(data.fruits) ? data.fruits : [];
+            tests = Array.isArray(data.tests) ? data.tests : [];
+            dataMeta = data.meta || null;
+            totalFruits = fruits.length;
+            dataLoaded = true;
+
+            const metaText = dataMeta
+                ? `Aktualisiert am ${dataMeta.updated || 'unbekannt'} · Version ${dataMeta.version || '—'}`
+                : '';
+            setDataStatus('Daten erfolgreich geladen ✅', 'info', metaText);
+        } catch (error) {
+            console.error('Fehler beim Laden der Daten', error);
+            dataLoaded = false;
+            fruits = [];
+            tests = [];
+            totalFruits = 0;
+
+            const failMsg = error.name === 'AbortError'
+                ? 'Zeitüberschreitung: Die Verbindung ist gerade zu langsam.'
+                : 'Fehler beim Laden der Daten. Bitte versuche es später erneut.';
+            setDataStatus(failMsg, 'error', 'Tippe auf „Neu laden“, um den Versuch zu wiederholen.');
+            gallery.innerHTML = '';
+        } finally {
+            clearTimeout(slowTimer);
+            clearTimeout(timeoutTimer);
+            isLoadingData = false;
+            reloadDataBtn.disabled = false;
+
+            setControlsDisabled(fruits.length === 0);
+            renderFruits();
+            renderCertificates();
+            renderCertIcons();
+        }
+    }
+
     function generateCertificateObject() {
         const learnedCount = learnedSet.size;
         const xp = calculateXP();
@@ -2286,11 +2219,9 @@
     });
 
     // ==============================
-    // رسم أولي
+    // رسم أولي (تحميل البيانات)
     // ==============================
-    renderFruits();
-    renderCertificates();
-    renderCertIcons();
+    loadData();
 </script>
 </body>
 </html>
