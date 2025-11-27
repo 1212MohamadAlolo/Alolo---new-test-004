@@ -967,6 +967,151 @@
             opacity: 0.9;
         }
 
+        .cert-highlight {
+            background: linear-gradient(135deg, rgba(11, 35, 64, 0.96), rgba(245, 195, 59, 0.12));
+            border: 1px solid rgba(245, 195, 59, 0.45);
+            border-radius: 18px;
+            padding: 1rem 1.1rem 1.1rem;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.38);
+            margin-bottom: 0.8rem;
+        }
+
+        .cert-highlight-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-highlight-title {
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .cert-highlight-copy {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .cert-status-badge {
+            flex: 0 0 auto;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(245, 195, 59, 0.7);
+            background: rgba(0, 0, 0, 0.35);
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .cert-status-badge.ready {
+            background: linear-gradient(135deg, var(--yellow-soft), #facc15);
+            color: #111827;
+        }
+
+        .cert-progress-block {
+            margin: 0.4rem 0 0.6rem;
+        }
+
+        .progress-labels {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 0.25rem;
+        }
+
+        .progress-track.slim {
+            height: 0.45rem;
+        }
+
+        .cert-progress-foot {
+            font-size: 0.8rem;
+            opacity: 0.88;
+            margin-top: 0.25rem;
+        }
+
+        .cert-cta-row {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.3rem;
+        }
+
+        .cert-cta-note {
+            font-size: 0.82rem;
+            opacity: 0.9;
+        }
+
+        .cert-checklist {
+            list-style: none;
+            display: grid;
+            gap: 0.35rem;
+            margin-top: 0.4rem;
+            padding-left: 0.1rem;
+        }
+
+        .cert-check-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.45rem;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.5rem;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .cert-check-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+        }
+
+        .cert-spotlight {
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cert-spotlight-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .cert-spotlight-id {
+            font-size: 0.8rem;
+            opacity: 0.85;
+            padding: 0.25rem 0.55rem;
+            border-radius: 999px;
+            border: 1px dashed rgba(255, 255, 255, 0.35);
+        }
+
+        .cert-spotlight-meta {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .cert-spotlight-tip {
+            font-size: 0.82rem;
+            opacity: 0.88;
+            margin-top: 0.3rem;
+        }
+
         .cert-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1626,14 +1771,63 @@
                 Jede Urkunde bestätigt deinen Lernfortschritt auf einfache und freundliche Art.
             </p>
         </div>
-        <div class="controls-row" style="margin-bottom:0.8rem;">
-            <button id="generateCertBtn" class="control-button" type="button">
-                📜 Zertifikat erzeugen
-            </button>
-            <div style="font-size:0.8rem; opacity:0.9;">
-                Tipp: Je mehr Karten du als „Gelernt“ markierst, desto aussagekräftiger wird dein Zertifikat.
+
+        <div class="cert-highlight">
+            <div class="cert-highlight-header">
+                <div>
+                    <div class="eyebrow">Zertifikats-Status</div>
+                    <h3 class="cert-highlight-title">Professionelle Urkunde mit Fortschrittsprüfung</h3>
+                    <p class="cert-highlight-copy">
+                        Wir prüfen dein Lernpensum, bevor ein Zertifikat erstellt wird. So bleibt jede Urkunde
+                        hochwertig, nachvollziehbar und lässt sich bei Bedarf direkt drucken.
+                    </p>
+                </div>
+                <div id="certStatusBadge" class="cert-status-badge">Wird geprüft</div>
             </div>
+
+            <div class="cert-progress-block">
+                <div class="progress-labels">
+                    <span id="certProgressLabel">0 von 0 Karten markiert</span>
+                    <span id="certProgressValue">0%</span>
+                </div>
+                <div class="progress-track slim" aria-hidden="true">
+                    <div id="certProgressBar" class="progress-bar"></div>
+                </div>
+                <p class="cert-progress-foot">
+                    Sobald mindestens drei Karten als „Gelernt“ markiert sind, wird der Zertifikats-Button aktiv.
+                    Mehr XP erhöhen die Glaubwürdigkeit deiner Urkunde.
+                </p>
+            </div>
+
+            <div class="cert-cta-row">
+                <button id="generateCertBtn" class="control-button" type="button">
+                    📜 Zertifikat erzeugen
+                </button>
+                <div class="cert-cta-note">
+                    Tipp: Nutze später den Druck-Button oben, um dein Zertifikat als PDF zu sichern.
+                </div>
+            </div>
+
+            <ul id="certChecklist" class="cert-checklist"></ul>
         </div>
+
+        <div id="certSpotlight" class="cert-spotlight" aria-live="polite">
+            <div class="cert-spotlight-header">
+                <div>
+                    <div class="eyebrow">Neueste Urkunde</div>
+                    <h3 id="certSpotlightTitle" class="cert-highlight-title">Noch kein Zertifikat</h3>
+                </div>
+                <span id="certSpotlightId" class="cert-spotlight-id">—</span>
+            </div>
+            <p id="certSpotlightMeta" class="cert-spotlight-meta">
+                Sobald du dein erstes Zertifikat erzeugst, siehst du hier Datum, XP und Fortschritt auf einen Blick.
+            </p>
+            <p class="cert-spotlight-tip">
+                Hinweis: Jedes Zertifikat erhält eine eindeutige ID und einen Zeitstempel, damit du es jederzeit
+                professionell nachweisen kannst.
+            </p>
+        </div>
+
         <div id="certList" class="cert-list">
             <!-- الشهادات تولَّد هنا -->
         </div>
@@ -1780,6 +1974,14 @@
     const quizInfo = document.getElementById('quizInfo');
     const xpValueEl = document.getElementById('xpValue');
     const certIconsEl = document.getElementById('certIcons');
+    const certProgressLabelEl = document.getElementById('certProgressLabel');
+    const certProgressValueEl = document.getElementById('certProgressValue');
+    const certProgressBarEl = document.getElementById('certProgressBar');
+    const certChecklistEl = document.getElementById('certChecklist');
+    const certStatusBadgeEl = document.getElementById('certStatusBadge');
+    const certSpotlightTitleEl = document.getElementById('certSpotlightTitle');
+    const certSpotlightMetaEl = document.getElementById('certSpotlightMeta');
+    const certSpotlightIdEl = document.getElementById('certSpotlightId');
     const navTabs = document.querySelectorAll('.nav-tab');
     const pages = document.querySelectorAll('.page');
     const statTotalCardsEl = document.getElementById('statTotalCards');
@@ -1861,6 +2063,7 @@
         progressBar.style.width = `${ratio}%`;
         const xp = calculateXP();
         updateOverviewStats(xp);
+        updateCertificateProgress();
     }
 
     function updateQuizInfo() {
@@ -1872,6 +2075,77 @@
         }
         quizInfo.textContent = `Schnell-Quiz (A1): ${quizStats.correct} / ${quizStats.total} richtig`;
         updateOverviewStats();
+    }
+
+    function renderCertSpotlight() {
+        if (!certSpotlightTitleEl || !certSpotlightMetaEl || !certSpotlightIdEl) return;
+
+        if (certificates.length === 0) {
+            certSpotlightTitleEl.textContent = 'Noch kein Zertifikat';
+            certSpotlightIdEl.textContent = '—';
+            certSpotlightMetaEl.textContent = 'Sobald du ein Zertifikat erzeugst, erscheinen ID, Datum und XP hier.';
+            return;
+        }
+
+        const latest = certificates[certificates.length - 1];
+        certSpotlightTitleEl.textContent = `Alolo Früchte · ${latest.title}`;
+        certSpotlightIdEl.textContent = latest.id;
+        certSpotlightMetaEl.textContent = `Ausgestellt am ${formatDate(latest.dateISO)} · ${latest.learnedCount} / ${latest.totalFruits} Karten · ${latest.xp} XP`;
+    }
+
+    function updateCertificateChecklist(xp, minimumForCert, total) {
+        if (!certChecklistEl) return;
+
+        const checklistItems = [
+            {
+                label: 'Mindestens 3 Karten als „Gelernt“ markiert',
+                met: learnedSet.size >= minimumForCert
+            },
+            {
+                label: `${xp} XP gesammelt (10 XP je Karte)`,
+                met: xp >= minimumForCert * 10
+            },
+            {
+                label: `Datensatz synchron (${total} Karten verfügbar)`,
+                met: total > 0
+            }
+        ];
+
+        certChecklistEl.innerHTML = '';
+
+        checklistItems.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'cert-check-item';
+            li.innerHTML = `
+                <span class="cert-check-icon">${item.met ? '✓' : '•'}</span>
+                <span>${item.label}</span>
+            `;
+            certChecklistEl.appendChild(li);
+        });
+    }
+
+    function updateCertificateProgress() {
+        if (!certProgressLabelEl || !certProgressValueEl || !certProgressBarEl || !certStatusBadgeEl) return;
+
+        const total = totalFruits || fruits.length;
+        const learnedCount = learnedSet.size;
+        const minimumForCert = 3;
+        const xp = calculateXP();
+
+        const percent = total > 0 ? Math.round((learnedCount / total) * 100) : 0;
+        certProgressLabelEl.textContent = `${learnedCount} von ${total} Karten markiert`;
+        certProgressValueEl.textContent = `${percent}%`;
+        certProgressBarEl.style.width = `${Math.min(100, percent)}%`;
+
+        const remaining = Math.max(0, minimumForCert - learnedCount);
+        certStatusBadgeEl.textContent = remaining === 0 ? 'Bereit' : `Noch ${remaining} Karten`;
+        certStatusBadgeEl.classList.toggle('ready', remaining === 0);
+        if (generateCertBtn) {
+            generateCertBtn.disabled = remaining > 0;
+        }
+
+        updateCertificateChecklist(xp, minimumForCert, total);
+        renderCertSpotlight();
     }
 
     function normalizeText(str) {
@@ -2348,6 +2622,7 @@
         });
 
         renderCertIcons();
+        renderCertSpotlight();
     }
 
     async function loadData(options = { force: false }) {
